@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="HelloWorld" basedir='.' default="run">
+	<property name="src" value="src" />
+	<property name="classes" value="classes" />
+	<path id="buildpath">
+		<pathelement location="lib/junit4.jar" />
+		<pathelement location="lib/hamcrest-core-1.3.jar" />
+		<pathelement location="src" />
+		<pathelement location="classes" />
+	</path>
+
+	<target name="build" description="build">
+		<delete dir="${classes}" />
+		<mkdir  dir="${classes}" />
+		<javac srcdir="${src}" destdir="${classes}" includeantruntime="false" classpathref="buildpath">
+		</javac>
+	</target>
+ 
+	<target name="run" depends="build">
+		<java classname="Helloworld">
+			<classpath>
+				<pathelement path="${classes}" />
+			</classpath>
+		</java>
+	</target>
+	
+	<target name="test" depends="build" >
+		<junit fork="yes">
+			<classpath>
+				<pathelement location="lib/junit4.jar" />
+				<pathelement location="lib/hamcrest-core-1.3.jar" />
+				<pathelement location="${classes}" />
+			</classpath>
+			<formatter type="brief" usefile="false" />
+			<test name="HelloworldTest" />
+		</junit>
+        </target>
+ 
+	<target name="clean">
+		<delete dir="${classes}"/>
+	</target>
+</project>
